@@ -70,7 +70,7 @@ function draw() {
 	drawSprites();
 }
 
-function movement(helicopterSprite, packageSprite){
+function movement(){
 	if(keyDown('left')){
 		helicopterSprite.velocityX = -3;
 		packageSprite.velocityY = -3;
