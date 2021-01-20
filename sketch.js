@@ -1,13 +1,13 @@
-var helicopterIMG, helicopterSprite, packageSprite, packageIMG;
-var packageBody, ground
+var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
+var packageBody,ground
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
 function preload(){
-    helicopterIMG=loadImage("helicopter.png")
-    packageIMG=loadImage("package.png")
+	helicopterIMG=loadImage("helicopter.png")
+	packageIMG=loadImage("package.png")
 }
 
 function setup() {
@@ -25,13 +25,12 @@ function setup() {
 	groundSprite=createSprite(width/2, height-35, width,10);
 	groundSprite.shapeColor=color(255)
 
-
 	engine = Engine.create();
 	world = engine.world;
 
 	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.4, isStatic:true});
 	World.add(world, packageBody);
-
+	
 	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
  	World.add(world, ground);
 
@@ -60,31 +59,27 @@ function setup() {
 }
 
 function draw() {
-	rectMode(CENTER);
-	background(0);
-	
-	packageSprite.x= packageBody.position.x 
-	packageSprite.y= packageBody.position.y 
+  rectMode(CENTER);
+  background(0);
+ 
+  packageSprite.x= packageBody.position.x 
+  packageSprite.y= packageBody.position.y 
 
-    movement();
-	drawSprites();
+  drawSprites();
 }
 
-function movement(){
-	if(keyDown('left')){
-		helicopterSprite.velocityX = -3;
-		packageSprite.velocityY = -3;
-	}
-	if(keyDown('right')){
-		helicopterSprite.velocityX = 3;
-		packageSprite.velocityY = 3;
-	}
-	if(keyDown('down')){
-		helicopterSprite.velocityX = 0;
-		packageSprite.velocityY = 4.5;
-	}
-	if(keyWentUp('down')){
-		helicopterSprite.velocityX = 0;
-		packageSprite.velocityY = 0;
-	}
+function keyPressed() {
+  if(keyCode === LEFT_ARROW) {
+    helicopterSprite.x=helicopterSprite.x-20;    
+    translation={x:-20,y:0}
+    Matter.Body.translate(packageBody, translation)
+  }
+  else if (keyCode === RIGHT_ARROW) {
+    helicopterSprite.x=helicopterSprite.x+20;
+    translation={x:20,y:0}
+    Matter.Body.translate(packageBody, translation)
+  }
+  else if (keyCode === DOWN_ARROW) {
+    Matter.Body.setStatic(packageBody,false);
+  }
 }
